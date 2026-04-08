@@ -1,0 +1,153 @@
+.auth-shell {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.auth-brand {
+  text-align: center;
+}
+
+.auth-kicker {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.auth-logo-mark {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.16);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.auth-brand:hover .auth-logo-mark {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.auth-brand h1 {
+  margin: 4px 0 0;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.auth-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  animation: authCardEnter 320ms ease-out;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(110deg, rgba(14, 165, 233, 0), rgba(14, 165, 233, 0.35), rgba(37, 99, 235, 0));
+  background-size: 220% 100%;
+  animation: authBorderShimmer 4.8s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes authCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes authBorderShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -20% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-card {
+    animation: none;
+  }
+
+  .auth-card::before {
+    animation: none;
+  }
+
+  .auth-logo-mark {
+    transition: none;
+  }
+}
+
+.auth-card h2 {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+
+.auth-subtitle {
+  margin: 0 0 20px;
+  color: #64748b;
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.auth-form input {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 1rem;
+}
+
+.auth-form input:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+.auth-error {
+  margin: 0;
+  color: #dc2626;
+  font-size: 0.92rem;
+}
+
+.auth-footnote {
+  margin: 16px 0 0;
+  font-size: 0.92rem;
+  color: #334155;
+}
