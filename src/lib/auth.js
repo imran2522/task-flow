@@ -26,5 +26,11 @@ export function clearAuthSession() {
 }
 
 export function getApiBaseUrl() {
-  return (import.meta.env.VITE_API_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const configured = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+  if (configured) return configured;
+
+  // In local dev, prefer relative URLs so Vite proxy can forward to the API.
+  if (import.meta.env.DEV) return '';
+
+  return 'http://localhost:3000';
 }
