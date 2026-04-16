@@ -1,0 +1,133 @@
+.dashboard-shell {
+  padding: 1.25rem;
+  text-align: left;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+}
+
+.dashboard-header p {
+  margin: 0.35rem 0 0;
+  opacity: 0.85;
+}
+
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.token-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  border: 1px solid transparent;
+}
+
+.token-pill.ok {
+  color: #1d7c43;
+  background: #e7f8ee;
+  border-color: #9fdfb9;
+}
+
+.token-pill.warn {
+  color: #98340a;
+  background: #fff1e8;
+  border-color: #ffc39e;
+}
+
+.board-columns {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.board-column-wrap {
+  flex: 1 1 260px;
+  min-width: 260px;
+  max-width: 360px;
+}
+
+.board-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.board-column-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.board-column-header span {
+  min-width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eceff3;
+  color: #334155;
+  font-size: 0.85rem;
+}
+
+.board-column {
+  min-height: 220px;
+  border-radius: 12px;
+  background: #f7f8fb;
+  border: 1px solid #dce1ea;
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.board-column.is-over {
+  background: #edf4ff;
+  border-color: #93b6f4;
+}
+
+.task-card {
+  border: 1px solid #d8dee8;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 0.8rem;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+.task-card p {
+  margin: 0 0 0.35rem;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.task-card small {
+  color: #475569;
+}
+
+.task-card.is-dragging {
+  border-color: #8ea8d8;
+  box-shadow: 0 8px 20px rgba(61, 103, 177, 0.2);
+}
+
+@media (max-width: 720px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
