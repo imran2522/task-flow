@@ -214,10 +214,10 @@ flowchart LR
 	FE --> L
 
 	subgraph Backend Routes
-		R1[/api/auth]
-		R2[/api/projects]
-		R3[/api/tasks]
-		R4[/api/users]
+		R1["/api/auth"]
+		R2["/api/projects"]
+		R3["/api/tasks"]
+		R4["/api/users"]
 	end
 
 	API --> R1
