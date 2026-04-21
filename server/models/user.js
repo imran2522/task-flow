@@ -17,7 +17,11 @@ const UserSchema = new Schema(
     email: { type: String, required: true, unique: true, lowercase: true, trim: true, index: true },
     passwordHash: { type: String, required: true },
     avatarUrl: { type: String },
-    role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    role: {
+      type: String,
+      enum: ['user', 'admin', 'viewer', 'editor', 'contributor'],
+      default: 'viewer',
+    },
     settings: { type: NotificationSettingsSchema, default: () => ({}) },
   },
   { timestamps: true }

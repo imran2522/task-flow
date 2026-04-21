@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import { connectMongo } from '../db.js';
 import Task from '../models/task.js';
+import { requireAuth, requireRoles } from '../middleware/authz.js';
 
 const router = Router();
 
 router.use(async (req, res, next) => {
   try { await connectMongo(); next(); } catch (e) { next(e); }
 });
+
+router.use(requireAuth);
 
 // GET /boards — returns tasks grouped by status for a project
 router.get('/boards', async (req, res, next) => {
@@ -30,9 +33,9 @@ router.get('/boards', async (req, res, next) => {
 });
 
 // POST /create-task — create a task
-router.post('/create-task', async (req, res, next) => {
+router.post('/create-task', requireRoles('admin', 'contributor'), async (req, res, next) => {
   try {
-    const { title, project, description, status, priority, assignee, reporter, createdBy, tags, order, dueDate } = req.body || {};
+    const { title, project, description, status, priority, assignee, reporter, tags, order, dueDate } = req.body || {};
     if (!title || !project) return res.status(400).json({ error: 'title and project are required' });
     const payload = {
       title,
@@ -42,7 +45,8 @@ router.post('/create-task', async (req, res, next) => {
       priority,
       assignee,
       reporter,
-      createdBy: createdBy || reporter,
+      createdBy: req.user.id,
+      reporter: reporter || req.user.id,
       tags,
       order,
       dueDate,
@@ -53,7 +57,7 @@ router.post('/create-task', async (req, res, next) => {
 });
 
 // PUT /update-task-status — update only the status (and optional order)
-router.put('/update-task-status', async (req, res, next) => {
+router.put('/update-task-status', requireRoles('admin', 'editor'), async (req, res, next) => {
   try {
     const { id, status, order } = req.body || {};
     if (!id || !status) return res.status(400).json({ error: 'id and status are required' });

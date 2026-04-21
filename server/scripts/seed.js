@@ -62,24 +62,96 @@ async function run() {
 
   const user = await User.findOneAndUpdate(
     { email: 'demo@example.com' },
-    { name: 'Demo User', email: 'demo@example.com', passwordHash },
+    { name: 'Demo User', email: 'demo@example.com', passwordHash, role: 'admin' },
+    { upsert: true, new: true }
+  );
+
+  const employeeViewer = await User.findOneAndUpdate(
+    { email: 'viewer.employee@example.com' },
+    {
+      name: 'Viewer Employee',
+      email: 'viewer.employee@example.com',
+      passwordHash,
+      role: 'viewer',
+    },
+    { upsert: true, new: true }
+  );
+
+  const employeeEditor = await User.findOneAndUpdate(
+    { email: 'editor.employee@example.com' },
+    {
+      name: 'Editor Employee',
+      email: 'editor.employee@example.com',
+      passwordHash,
+      role: 'editor',
+    },
+    { upsert: true, new: true }
+  );
+
+  const employeeContributor = await User.findOneAndUpdate(
+    { email: 'contributor.employee@example.com' },
+    {
+      name: 'Contributor Employee',
+      email: 'contributor.employee@example.com',
+      passwordHash,
+      role: 'contributor',
+    },
+    { upsert: true, new: true }
+  );
+
+  const employeeAdmin = await User.findOneAndUpdate(
+    { email: 'admin.employee@example.com' },
+    {
+      name: 'Admin Employee',
+      email: 'admin.employee@example.com',
+      passwordHash,
+      role: 'admin',
+    },
     { upsert: true, new: true }
   );
 
   const project = await Project.findOneAndUpdate(
     { key: 'TF' },
-    { name: 'Task Flow', key: 'TF', owner: user._id },
+    { name: 'Task Flow', key: 'TF', owner: user._id, members: [user._id] },
+    { upsert: true, new: true }
+  );
+
+  const opsProject = await Project.findOneAndUpdate(
+    { key: 'OPS' },
+    { name: 'Operations', key: 'OPS', owner: user._id, members: [user._id] },
     { upsert: true, new: true }
   );
 
   await Task.deleteMany({
-    project: project._id,
+    project: { $in: [project._id, opsProject._id] },
     createdBy: user._id,
-    tags: { $in: ['planning', 'sprint', 'design', 'ui', 'backend', 'auth', 'frontend', 'integration', 'infra', 'ci', 'setup', 'repo', 'quality', 'tooling'] },
+    tags: {
+      $in: [
+        'planning', 'sprint', 'design', 'ui', 'backend', 'auth', 'frontend', 'integration',
+        'infra', 'ci', 'setup', 'repo', 'quality', 'tooling', 'ops', 'monitoring', 'oncall',
+      ],
+    },
   });
 
-  const created = await Task.insertMany(
-    demoTasks.map((task, index) => ({
+  const opsTasks = [
+    {
+      title: 'Review server alerts',
+      description: 'Triage overnight production alerts and assign owners.',
+      status: 'todo',
+      priority: 'medium',
+      tags: ['ops', 'monitoring'],
+    },
+    {
+      title: 'Update on-call runbook',
+      description: 'Document recent incident learnings and mitigation steps.',
+      status: 'in_progress',
+      priority: 'high',
+      tags: ['ops', 'oncall'],
+    },
+  ];
+
+  const created = await Task.insertMany([
+    ...demoTasks.map((task, index) => ({
       ...task,
       assignee: user._id,
       reporter: user._id,
@@ -90,8 +162,19 @@ async function run() {
         { title: 'Define acceptance criteria', done: task.status === 'done' },
         { title: 'Implement and test', done: task.status === 'done' },
       ],
-    }))
-  );
+    })),
+    ...opsTasks.map((task, index) => ({
+      ...task,
+      assignee: user._id,
+      reporter: user._id,
+      project: opsProject._id,
+      createdBy: user._id,
+      order: index,
+      subtasks: [
+        { title: 'Document remediation', done: false },
+      ],
+    })),
+  ]);
 
   const counts = created.reduce((acc, task) => {
     acc[task.status] = (acc[task.status] || 0) + 1;
@@ -99,6 +182,15 @@ async function run() {
   }, {});
 
   console.log('Seeded demo tasks:', created.length);
+  console.log('Boards:', [project.name, opsProject.name]);
+  console.log('Users:', [
+    { email: user.email, role: user.role },
+    { email: employeeViewer.email, role: employeeViewer.role },
+    { email: employeeEditor.email, role: employeeEditor.role },
+    { email: employeeContributor.email, role: employeeContributor.role },
+    { email: employeeAdmin.email, role: employeeAdmin.role },
+  ]);
+  console.log('Seed password for all users:', 'Passw0rd!');
   console.log('Status counts:', counts);
 }
 

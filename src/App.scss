@@ -1,0 +1,152 @@
+
+.app-shell {
+  @apply min-h-screen;
+}
+
+.top-nav {
+  @apply sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 px-4 py-3 backdrop-blur;
+}
+
+.top-nav-inner {
+  @apply mx-auto flex w-full max-w-6xl flex-wrap items-center gap-2;
+}
+
+.nav-link {
+  @apply inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-brand-700;
+}
+
+.nav-link.active {
+  @apply bg-brand-100 text-brand-800;
+}
+
+.theme-indicator {
+  @apply ml-auto inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/90 px-3 py-2 text-sm font-medium text-slate-700;
+}
+
+.theme-indicator-value {
+  @apply rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-slate-700;
+}
+
+.page-wrap {
+  @apply mx-auto w-full max-w-6xl px-3 py-5 md:px-4 md:py-6;
+}
+
+.auth-shell {
+  @apply mx-auto grid min-h-[calc(100vh-9rem)] w-full max-w-5xl items-center gap-8 md:grid-cols-2;
+}
+
+.auth-card {
+  @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-soft;
+}
+
+.btn-secondary {
+  @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-100;
+}
+
+.btn-ghost {
+  @apply border border-transparent bg-transparent text-slate-700 shadow-none hover:border-slate-200 hover:bg-slate-100;
+}
+
+.btn-danger {
+  @apply border-red-700 bg-red-700 text-white hover:bg-red-600;
+}
+
+.loading-spinner {
+  @apply inline-block h-5 w-5 rounded-full border-2 border-slate-300 border-t-brand-600;
+  animation: spinner-rotate 0.8s linear infinite;
+}
+
+.loading-spinner-sm {
+  @apply h-4 w-4 border-2;
+}
+
+html.dark body {
+  @apply bg-slate-950 text-slate-100;
+}
+
+html.dark .top-nav {
+  @apply border-slate-700/80 bg-slate-900/85;
+}
+
+html.dark .nav-link {
+  @apply text-slate-200 hover:bg-slate-800 hover:text-white;
+}
+
+html.dark .nav-link.active {
+  @apply bg-brand-700 text-white;
+}
+
+html.dark .theme-indicator {
+  @apply border-slate-700 bg-slate-900 text-slate-100;
+}
+
+html.dark .theme-indicator-value {
+  @apply bg-slate-800 text-slate-200;
+}
+
+html.dark .page-wrap {
+  @apply text-slate-100;
+}
+
+html.dark .btn-secondary {
+  @apply border-slate-600 bg-slate-800 text-slate-100 hover:bg-slate-700;
+}
+
+html.dark .btn-ghost {
+  @apply text-slate-200 hover:border-slate-600 hover:bg-slate-800;
+}
+
+html.dark .loading-spinner {
+  @apply border-slate-600 border-t-brand-400;
+}
+
+html.dark .auth-card {
+  @apply border-slate-700 bg-slate-900;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  @apply border-slate-600 bg-slate-900 text-slate-100;
+}
+
+html.dark a {
+  @apply text-brand-300 hover:text-brand-200;
+}
+
+@keyframes spinner-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .top-nav-inner {
+    @apply justify-between;
+  }
+
+  .nav-link {
+    @apply h-10 w-10 justify-center rounded-xl px-0;
+  }
+
+  .theme-indicator {
+    @apply h-10 px-3;
+  }
+
+  .theme-indicator-label {
+    @apply sr-only;
+  }
+
+  .compact-label {
+    @apply sr-only;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation-duration: 1.6s;
+  }
+}

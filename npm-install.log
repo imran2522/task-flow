@@ -1,0 +1,32 @@
+npm warn ERESOLVE overriding peer dependency
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: eslint-plugin-react-hooks@7.0.1
+npm error Found: eslint@10.0.2
+npm error node_modules/eslint
+npm error   dev eslint@"^10.0.2" from the root project
+npm error   peer eslint@"^6.0.0 || ^7.0.0 || >=8.0.0" from @eslint-community/eslint-utils@4.9.1
+npm error   node_modules/@eslint-community/eslint-utils
+npm error     @eslint-community/eslint-utils@"^4.8.0" from eslint@10.0.2
+npm error   1 more (eslint-plugin-react-refresh)
+npm error
+npm error Could not resolve dependency:
+npm error peer eslint@"^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0" from eslint-plugin-react-hooks@7.0.1
+npm error node_modules/eslint-plugin-react-hooks
+npm error   dev eslint-plugin-react-hooks@"^7.0.1" from the root project
+npm error
+npm error Conflicting peer dependency: eslint@9.39.4
+npm error node_modules/eslint
+npm error   peer eslint@"^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0" from eslint-plugin-react-hooks@7.0.1
+npm error   node_modules/eslint-plugin-react-hooks
+npm error     dev eslint-plugin-react-hooks@"^7.0.1" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /Users/imran/.npm/_logs/2026-04-16T10_15_28_477Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /Users/imran/.npm/_logs/2026-04-16T10_15_28_477Z-debug-0.log

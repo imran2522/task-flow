@@ -1,0 +1,301 @@
+.dashboard-shell {
+  @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-soft;
+}
+
+.dashboard-header {
+  @apply mb-5 flex flex-col gap-3 border-b border-slate-100 pb-4 md:flex-row md:items-center md:justify-between;
+}
+
+.dashboard-header h2 {
+  @apply m-0 text-2xl font-bold text-slate-900;
+}
+
+.dashboard-header p {
+  @apply m-0.5 text-sm text-slate-600;
+}
+
+.dashboard-actions {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.dashboard-actions > button {
+  @apply whitespace-nowrap;
+}
+
+.dashboard-actions select {
+  @apply rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm;
+}
+
+.board-create-form,
+.board-manage-form,
+.task-create-form,
+.users-toolbar {
+  @apply mb-4 flex flex-wrap gap-2;
+}
+
+.board-create-form input,
+.board-manage-form input,
+.board-manage-form select,
+.task-create-form input,
+.task-create-form select,
+.users-toolbar input,
+.users-toolbar select,
+.user-form input,
+.user-form select {
+  @apply rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm;
+}
+
+.boards-grid {
+  @apply grid gap-3 md:grid-cols-2 xl:grid-cols-3;
+}
+
+.board-tile {
+  @apply rounded-xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-4;
+  animation: fade-up 280ms ease both;
+}
+
+.board-tile button {
+  @apply mt-3;
+}
+
+.board-tile h3 {
+  @apply m-0 text-lg font-semibold text-slate-900;
+}
+
+.board-tile p,
+.permission-note {
+  @apply mt-1 text-sm text-slate-600;
+}
+
+.success-note {
+  @apply text-sm text-emerald-700;
+}
+
+.loading-state {
+  @apply inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700;
+}
+
+.admin-users {
+  @apply mb-5 rounded-xl border border-slate-200 bg-slate-50 p-4;
+}
+
+.admin-users h3 {
+  @apply mb-3 text-lg font-semibold text-slate-900;
+}
+
+.user-form {
+  @apply mb-3 grid gap-2 md:grid-cols-2 xl:grid-cols-3;
+}
+
+.users-list {
+  @apply grid gap-2;
+  padding-block-end: 1rem
+}
+
+.user-row {
+  @apply flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white p-3;
+  animation: fade-up 260ms ease both;
+}
+
+.user-row p {
+  @apply m-0.5 text-sm text-slate-600;
+}
+
+.user-row-actions,
+.users-pagination {
+  @apply flex items-center gap-2;
+}
+
+.danger-button {
+  @apply border-red-700 bg-red-700 text-white hover:bg-red-600;
+}
+
+.token-pill {
+  @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold;
+}
+
+.token-pill.ok {
+  @apply border-emerald-300 bg-emerald-50 text-emerald-700;
+}
+
+.token-pill.warn {
+  @apply border-amber-300 bg-amber-50 text-amber-700;
+}
+
+.board-columns {
+  @apply flex gap-3 overflow-x-auto pb-1;
+}
+
+.board-column-wrap {
+  @apply min-w-[260px] flex-1;
+  animation: fade-up 300ms ease both;
+}
+
+.board-column-header {
+  @apply mb-2 flex items-center justify-between;
+}
+
+.board-column-header h3 {
+  @apply m-0 text-sm font-semibold uppercase tracking-wide text-slate-700;
+}
+
+.board-column-header span {
+  @apply inline-flex h-7 min-w-7 items-center justify-center rounded-full bg-slate-200 px-2 text-xs font-semibold text-slate-700;
+}
+
+.board-column {
+  @apply min-h-[240px] rounded-xl border border-slate-200 bg-slate-50 p-3;
+}
+
+.board-column.is-over {
+  @apply border-brand-300 bg-brand-50;
+}
+
+.task-card {
+  @apply mb-2 rounded-lg border border-slate-200 bg-white p-3;
+  animation: fade-up 200ms ease both;
+}
+
+.task-card p {
+  @apply m-0 text-sm font-semibold text-slate-900;
+}
+
+.task-card small {
+  @apply text-xs text-slate-500;
+}
+
+.task-card.is-dragging {
+  @apply border-brand-300 shadow-lg;
+}
+
+html.dark .dashboard-shell {
+  @apply border-slate-700 bg-slate-900;
+}
+
+html.dark .dashboard-header {
+  @apply border-slate-700;
+}
+
+html.dark .dashboard-header h2 {
+  @apply text-slate-100;
+}
+
+html.dark .dashboard-header p,
+html.dark .board-tile p,
+html.dark .permission-note,
+html.dark .user-row p,
+html.dark .task-card small {
+  @apply text-slate-300;
+}
+
+html.dark .board-tile,
+html.dark .user-row,
+html.dark .board-column,
+html.dark .task-card,
+html.dark .admin-users {
+  @apply border-slate-700 bg-slate-800;
+}
+
+html.dark .board-tile {
+  @apply border-slate-600 bg-gradient-to-br from-slate-800 to-slate-900 shadow-lg;
+}
+
+html.dark .board-tile h3,
+html.dark .admin-users h3,
+html.dark .task-card p {
+  @apply text-slate-100;
+}
+
+html.dark .board-tile p {
+  @apply text-slate-200;
+}
+
+html.dark .board-tile .btn-secondary {
+  @apply border-slate-500 bg-slate-950/70 text-slate-50 hover:border-brand-400 hover:bg-brand-700;
+}
+
+html.dark .loading-state {
+  @apply border-slate-700 bg-slate-800 text-slate-100;
+}
+
+html.dark .board-column-header h3,
+html.dark .board-column-header span {
+  @apply text-slate-200;
+}
+
+html.dark .board-column-header span {
+  @apply bg-slate-700;
+}
+
+html.dark .token-pill.ok {
+  @apply border-emerald-500/40 bg-emerald-500/10 text-emerald-300;
+}
+
+html.dark .token-pill.warn {
+  @apply border-amber-500/40 bg-amber-500/10 text-amber-300;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-shell {
+    @apply p-4;
+  }
+
+  .dashboard-actions {
+    @apply w-full;
+  }
+
+  .board-create-form,
+  .board-manage-form,
+  .task-create-form,
+  .users-toolbar {
+    @apply flex-col;
+  }
+
+  .board-create-form input,
+  .board-manage-form input,
+  .board-manage-form select,
+  .task-create-form input,
+  .task-create-form select,
+  .users-toolbar input,
+  .users-toolbar select {
+    @apply w-full;
+  }
+
+  .users-pagination {
+    @apply flex-wrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-actions {
+    @apply w-full justify-end;
+  }
+
+  .dashboard-actions > button {
+    @apply h-10 w-10 justify-center rounded-xl px-0;
+  }
+
+  .dashboard-actions > button span {
+    @apply sr-only;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board-tile,
+  .user-row,
+  .board-column-wrap,
+  .task-card {
+    animation: none;
+  }
+}

@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import { connectMongo } from '../db.js';
 import { listTasks, getTaskById, createTask, updateTask, deleteTask } from '../services/taskService.js';
+import { requireAuth, requireRoles } from '../middleware/authz.js';
 
 const router = Router();
 
 router.use(async (req, res, next) => {
   try { await connectMongo(); next(); } catch (e) { next(e); }
 });
+
+router.use(requireAuth);
 
 router.get('/', async (req, res, next) => {
   try {
@@ -25,14 +28,18 @@ router.get('/:id', async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', requireRoles('admin', 'contributor'), async (req, res, next) => {
   try {
-    const created = await createTask(req.body);
+    const created = await createTask({
+      ...req.body,
+      createdBy: req.user.id,
+      reporter: req.body?.reporter || req.user.id,
+    });
     res.status(201).json(created);
   } catch (e) { next(e); }
 });
 
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', requireRoles('admin', 'editor'), async (req, res, next) => {
   try {
     const updated = await updateTask(req.params.id, req.body);
     if (!updated) return res.status(404).json({ error: 'Not found' });
@@ -40,7 +47,7 @@ router.patch('/:id', async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', requireRoles('admin', 'editor'), async (req, res, next) => {
   try {
     const deleted = await deleteTask(req.params.id);
     if (!deleted) return res.status(404).json({ error: 'Not found' });
