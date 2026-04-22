@@ -49,7 +49,16 @@ npm run server
 npm run dev
 ```
 
-Node requirement: `>=18`.
+Node requirement: `>=20 <21 || >=22 <23 || >=24 <25`.
+
+Recommended for local development: use Node 24 LTS.
+
+If you use nvm:
+
+```bash
+nvm install 24
+nvm use 24
+```
 
 ## Demo Users
 
