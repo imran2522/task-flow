@@ -21,7 +21,35 @@ app.use(morgan('dev'));
 
 app.get('/health', (req, res) => res.json({ ok: true }));
 
-// (moved above router mounting)
+// Temporary debug SSE endpoint for Render troubleshooting (placed before router mounting)
+app.get('/mcp-debug', (req, res) => {
+  try {
+    console.log('/mcp-debug: connection from', req.ip, 'headers:', JSON.stringify(req.headers));
+    res.status(200);
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    if (typeof res.flushHeaders === 'function') res.flushHeaders();
+    res.write(': connected\n\n');
+    const t = setInterval(() => {
+      const payload = { time: Date.now(), msg: 'debug-ping' };
+      try {
+        res.write(`data: ${JSON.stringify(payload)}\n\n`);
+        console.log('/mcp-debug: sent', payload);
+      } catch (writeErr) {
+        console.error('/mcp-debug: write error', writeErr && writeErr.stack ? writeErr.stack : writeErr);
+      }
+    }, 5000);
+
+    req.on('close', () => {
+      clearInterval(t);
+      console.log('/mcp-debug: client disconnected');
+    });
+  } catch (err) {
+    console.error('/mcp-debug: handler error', err && err.stack ? err.stack : err);
+    try { res.status(500).send('debug handler error'); } catch (e) { console.error('failed to send error response', e); }
+  }
+});
 
 import tasksRouter from './routes/tasks.js';
 app.use('/api/tasks', tasksRouter);
@@ -61,36 +89,7 @@ io.on('connection', (socket) => {
     socket.to(String(boardRoom)).emit('taskCreated', payload);
   });
 });
-
-// Temporary debug SSE endpoint for Render troubleshooting
-app.get('/mcp-debug', (req, res) => {
-  try {
-    console.log('/mcp-debug: connection from', req.ip, 'headers:', JSON.stringify(req.headers));
-    res.status(200);
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-    if (typeof res.flushHeaders === 'function') res.flushHeaders();
-    res.write(': connected\n\n');
-    const t = setInterval(() => {
-      const payload = { time: Date.now(), msg: 'debug-ping' };
-      try {
-        res.write(`data: ${JSON.stringify(payload)}\n\n`);
-        console.log('/mcp-debug: sent', payload);
-      } catch (writeErr) {
-        console.error('/mcp-debug: write error', writeErr && writeErr.stack ? writeErr.stack : writeErr);
-      }
-    }, 5000);
-
-    req.on('close', () => {
-      clearInterval(t);
-      console.log('/mcp-debug: client disconnected');
-    });
-  } catch (err) {
-    console.error('/mcp-debug: handler error', err && err.stack ? err.stack : err);
-    try { res.status(500).send('debug handler error'); } catch (e) { console.error('failed to send error response', e); }
-  }
-});
+// (moved above router mounting)
 
 const port = Number(process.env.PORT || 3000);
 httpServer.listen(port, () => {
