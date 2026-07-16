@@ -6,6 +6,8 @@ import { requireAuth, requireRoles } from '../middleware/authz.js';
 const router = Router();
 
 router.use(async (req, res, next) => {
+  // Skip DB connect for MCP/SSE endpoints used for tooling or debugging
+  if (req.path && (req.path.startsWith('/mcp') || req.path.startsWith('/mcp-debug'))) return next();
   try { await connectMongo(); next(); } catch (e) { next(e); }
 });
 
