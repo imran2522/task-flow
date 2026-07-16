@@ -62,23 +62,32 @@ io.on('connection', (socket) => {
 
 // Temporary debug SSE endpoint for Render troubleshooting
 app.get('/mcp-debug', (req, res) => {
-  console.log('/mcp-debug: connection from', req.ip, 'headers:', JSON.stringify(req.headers));
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    Connection: 'keep-alive',
-  });
-  res.write(': connected\n\n');
-  const t = setInterval(() => {
-    const payload = { time: Date.now(), msg: 'debug-ping' };
-    res.write(`data: ${JSON.stringify(payload)}\n\n`);
-    console.log('/mcp-debug: sent', payload);
-  }, 5000);
+  try {
+    console.log('/mcp-debug: connection from', req.ip, 'headers:', JSON.stringify(req.headers));
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    });
+    res.write(': connected\n\n');
+    const t = setInterval(() => {
+      const payload = { time: Date.now(), msg: 'debug-ping' };
+      try {
+        res.write(`data: ${JSON.stringify(payload)}\n\n`);
+        console.log('/mcp-debug: sent', payload);
+      } catch (writeErr) {
+        console.error('/mcp-debug: write error', writeErr && writeErr.stack ? writeErr.stack : writeErr);
+      }
+    }, 5000);
 
-  req.on('close', () => {
-    clearInterval(t);
-    console.log('/mcp-debug: client disconnected');
-  });
+    req.on('close', () => {
+      clearInterval(t);
+      console.log('/mcp-debug: client disconnected');
+    });
+  } catch (err) {
+    console.error('/mcp-debug: handler error', err && err.stack ? err.stack : err);
+    try { res.status(500).send('debug handler error'); } catch (e) { console.error('failed to send error response', e); }
+  }
 });
 
 const port = Number(process.env.PORT || 3000);
