@@ -64,11 +64,11 @@ io.on('connection', (socket) => {
 app.get('/mcp-debug', (req, res) => {
   try {
     console.log('/mcp-debug: connection from', req.ip, 'headers:', JSON.stringify(req.headers));
-    res.writeHead(200, {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      Connection: 'keep-alive',
-    });
+    res.status(200);
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    if (typeof res.flushHeaders === 'function') res.flushHeaders();
     res.write(': connected\n\n');
     const t = setInterval(() => {
       const payload = { time: Date.now(), msg: 'debug-ping' };
