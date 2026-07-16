@@ -94,3 +94,9 @@ const port = Number(process.env.PORT || 3000);
 httpServer.listen(port, () => {
   console.log(`API listening on http://localhost:${port}`);
 });
+
+// Temporary error handler to expose stack traces for debugging on Render
+app.use((err, req, res, next) => {
+  console.error('UNHANDLED ERROR:', err && err.stack ? err.stack : err);
+  res.status(500).set('Content-Type', 'text/plain').send(err && err.stack ? err.stack : String(err));
+});
