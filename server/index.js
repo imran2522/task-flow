@@ -21,6 +21,8 @@ app.use(morgan('dev'));
 
 app.get('/health', (req, res) => res.json({ ok: true }));
 
+// (moved above router mounting)
+
 import tasksRouter from './routes/tasks.js';
 app.use('/api/tasks', tasksRouter);
 import authRouter from './routes/auth.js';
